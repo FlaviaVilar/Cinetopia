@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MovieDetailsViewController: UIViewController {
     
@@ -27,7 +28,8 @@ class MovieDetailsViewController: UIViewController {
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleToFill
-        imageView.image = UIImage(named: movie.image)
+        let url = URL(string: movie.image)
+        imageView.kf.setImage(with: url)
         return imageView
     }()
     
