@@ -10,6 +10,9 @@ import Kingfisher
 
 class MovieDetailsViewController: UIViewController {
     
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -57,37 +60,58 @@ class MovieDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
+        setupScrollView()
         addSubViews()
         setupConstraints()
     }
     
+    private func setupScrollView() {
+           scrollView.translatesAutoresizingMaskIntoConstraints = false
+           contentView.translatesAutoresizingMaskIntoConstraints = false
+           
+           view.addSubview(scrollView)
+           scrollView.addSubview(contentView)
+           
+           NSLayoutConstraint.activate([
+               scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+               scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+               scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+               scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+               
+               contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+               contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+               contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+               contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+               contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor) // isso é essencial pro scroll funcionar verticalmente
+           ])
+       }
     
     private func addSubViews() {
-        view.addSubview(titleLabel)
-        view.addSubview(posterImageView)
-        view.addSubview(rateLabel)
-        view.addSubview(synopsisLabel)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(posterImageView)
+        contentView.addSubview(rateLabel)
+        contentView.addSubview(synopsisLabel)
         
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             posterImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 34),
-            posterImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            posterImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             posterImageView.widthAnchor.constraint(equalToConstant: 220),
             posterImageView.heightAnchor.constraint(equalToConstant: 300),
             
             rateLabel.topAnchor.constraint(equalTo: posterImageView.bottomAnchor, constant: 34),
-            rateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            rateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
          
             synopsisLabel.topAnchor.constraint(equalTo: rateLabel.bottomAnchor, constant: 43),
-            synopsisLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            synopsisLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-        
+            synopsisLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            synopsisLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            synopsisLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
         ])
     }
     

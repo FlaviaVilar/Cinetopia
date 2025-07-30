@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 
 enum MovieServiceError: Error {
     case invalidURL
